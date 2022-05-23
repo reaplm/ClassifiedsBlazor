@@ -1,18 +1,27 @@
 ﻿using ClassifiedsBlazor.Entities;
 using ClassifiedsBlazor.Repository;
+using Newtonsoft.Json;
 
 namespace ClassifiedsBlazor.Services.Impl
 {
     public class AdvertService : IAdvertService
     {
-        private IAdvertRepo _advertRepo;
-        public AdvertService(IAdvertRepo advertRepo)
+        readonly
+        private HttpClient _httpClient;
+        public AdvertService(HttpClient httpClient)
         {
-            _advertRepo = advertRepo;
+            _httpClient = httpClient;
         }
-        public Task<List<Advert>> FindAll()
+        public async Task<IEnumerable<Advert>> FindAll()
         {
-            return _advertRepo.FindAll();
+            var response = await _httpClient.GetAsync("api/Advert");
+            response.EnsureSuccessStatusCode();
+
+            Task<String> result = response.Content.ReadAsStringAsync();
+            var adverts = JsonConvert.DeserializeObject<List<Advert>>(result.Result);
+
+            return adverts;
+
         }
     }
 }

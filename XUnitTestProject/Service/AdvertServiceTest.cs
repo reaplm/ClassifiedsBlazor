@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text.Json.Nodes;
+using System.Threading;
 using System.Threading.Tasks;
 using ClassifiedsBlazor.Entities;
 using ClassifiedsBlazor.Repository;
 using ClassifiedsBlazor.Repository.Impl;
 using ClassifiedsBlazor.Services.Impl;
 using Moq;
+using Moq.Protected;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace XUnitTestProject.Service
@@ -15,16 +22,32 @@ namespace XUnitTestProject.Service
         [Fact]
         public void TestFindAll()
         {
-            var mockRepo = new Mock<IAdvertRepo>();
-            mockRepo.Setup(x => x.FindAll()).Returns(Task.FromResult(GetAdverts()));
+            //Mocking HttpCleint
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                true,
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>()
+                ).ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(JsonConvert.SerializeObject(GetAdverts()))
+                }).Verifiable();
 
-            var service = new AdvertService(mockRepo.Object);
+            var httpClient = new HttpClient(mockHttpMessageHandler.Object)
+            {
+                BaseAddress = new Uri("http://test.com")
+            };
+
+            var service = new AdvertService(httpClient); 
             var task = service.FindAll();
-            var adverts = task.Result;
+            var adverts = task.Result as IEnumerable<Advert>;
          
             Assert.True(task.IsCompleted);
             Assert.NotNull(task.Result);
-            Assert.Equal(7, adverts.Count);
+            Assert.Equal(7, adverts.Count());
         }
         private List<Advert> GetAdverts()
         {

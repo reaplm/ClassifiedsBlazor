@@ -4,6 +4,6 @@ namespace ClassifiedsBlazor.Services
 {
     public interface IAdvertService
     {
-        Task<List<Advert>> FindAll();
+        Task<IEnumerable<Advert>> FindAll();
     }
 }
