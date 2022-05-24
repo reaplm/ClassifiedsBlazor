@@ -1,0 +1,55 @@
+﻿@inject IAdvertService AdvertService
+
+<h3>AdvertList</h3>
+
+@if(Adverts == null)
+{
+	
+}
+else
+{
+	<div class="row p-0" data-masonry='{"percentPosition": true }'>
+
+	@foreach(var advert in Adverts)
+	{
+		<div class="card m-3 shadow-sm px-0" style="width: 18rem;">
+			<div class="card-header d-flex justify-content-between">
+				<h5 class="card-title text-capitalize">@advert.Detail.Title</h5>
+		  </div>
+		  <div class="card-body">
+			
+			<h6 class="card-subtitle mb-2 text-muted">@advert.Detail.Location, @advert.Detail.Phone</h6>
+			<p class="card-text">@advert.Detail.Body</p>
+			
+			<NavLink href="@($"/Advert/{advert.ID}")" class="card-link card-link-color stretched-link">more</NavLink>
+		  </div>
+		
+		</div>
+	}
+		
+	</div>
+}
+
+
+
+
+@code {
+
+	public IEnumerable<Advert> Adverts = new List<Advert>();
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetAdverts();
+	}
+	protected async Task GetAdverts()
+	{
+		Adverts = await AdvertService.FindAll();
+	}
+	private void Navigate()
+	{
+		
+	}
+
+}
+

@@ -11,9 +11,9 @@ namespace ClassifiedsBlazor.Repository.Impl
         {
             _context = context;
         }
-        public Task<List<Advert>> FindAll()
+        public async Task<List<Advert>> FindAll()
         {
-            return _context.Adverts
+            return await _context.Adverts
                 .Include(x => x.Detail).ToListAsync();
                 
         }

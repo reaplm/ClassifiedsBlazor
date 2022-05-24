@@ -12,11 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
+builder.Services.AddControllers();
 
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 builder.Services.AddScoped<IAdvertRepo, AdvertRepo>();
-builder.Services.AddScoped(sp => new HttpClient());
+
+
+var baseUrl = builder.Configuration.GetValue<String>("BaseUrl");
+builder.Services.AddScoped(sp => new HttpClient
+{
+	BaseAddress = new Uri(baseUrl)
+});
 
 //Mysql
 var connectionString = builder.Configuration.GetSection("ConnectionStrings")["mysqlconnection"];
@@ -32,7 +38,8 @@ if (!app.Environment.IsDevelopment())
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
-
+//use api controllers
+app.MapControllers();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
