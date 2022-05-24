@@ -17,5 +17,11 @@ namespace ClassifiedsBlazor.Repository.Impl
                 .Include(x => x.Detail).ToListAsync();
                 
         }
+
+        public async Task<Advert> FindById(int id)
+        {
+            return await _context.Adverts
+                .FirstOrDefaultAsync(x => x.ID == id);
+        }
     }
 }

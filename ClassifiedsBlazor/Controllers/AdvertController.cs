@@ -28,5 +28,18 @@ namespace ClassifiedsBlazor.Controllers
                     "Error retrieving objects from the database");
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> FindById(int id)
+        {
+            try
+            {
+                return Ok(await _advertRepo.FindById(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving object from the database");
+            }
+        }
     }
 }

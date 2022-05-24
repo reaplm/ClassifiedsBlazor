@@ -15,11 +15,13 @@ namespace XUnitTestProject.Repository
     {
         private ApplicationContext appContext;
         private DbSet<Advert> mockSet;
+        private AdvertRepo repo;
 
         public AdvertRepositoryTest()
         {
             InitContext();
             mockSet = appContext.Set<Advert>();
+            repo = new AdvertRepo(appContext);
         }
         /// <summary>
         /// Testing FindAll
@@ -27,7 +29,7 @@ namespace XUnitTestProject.Repository
         [Fact]
         public void FindAll()
         {
-            var repo = new AdvertRepo(appContext);
+            
             Task<List<Advert>> task = repo.FindAll();
             List<Advert> result = task.Result;
 
@@ -35,6 +37,21 @@ namespace XUnitTestProject.Repository
             Assert.NotNull(result.ElementAt(0).Detail);
             Assert.NotNull(result.ElementAt(1).Detail);
             Assert.NotNull(result.ElementAt(2).Detail);
+        }
+        /// <summary>
+        /// Test FindById
+        /// </summary>
+        [Fact]
+        public void TestFindById()
+        {
+            Task<Advert> task = repo.FindById(2);
+            Advert result = task.Result;
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result.ID);
+            Assert.Equal("2011 BMW120i", result.Detail.Title);
+            Assert.Equal("Mogoditshane", result.Detail.Location);
+            Assert.Equal("2011 bmw120i Manual gear 150000km 80k", result.Detail.Body);
         }
         /// <summary>
         /// Initialize
@@ -75,6 +92,7 @@ namespace XUnitTestProject.Repository
             appContext = context;
 
         }
+       
     }
 
 }

@@ -23,5 +23,16 @@ namespace ClassifiedsBlazor.Services.Impl
             return adverts;
 
         }
+
+        public async Task<Advert> FindById(int id)
+        {
+            var response = await _httpClient.GetAsync("api/Advert");
+            response.EnsureSuccessStatusCode();
+
+            Task<String> result = response.Content.ReadAsStringAsync();
+            var advert = JsonConvert.DeserializeObject<Advert>(result.Result);
+
+            return advert;
+        }
     }
 }
