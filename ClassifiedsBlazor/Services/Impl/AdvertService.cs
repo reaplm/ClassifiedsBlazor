@@ -26,7 +26,7 @@ namespace ClassifiedsBlazor.Services.Impl
 
         public async Task<Advert> FindById(int id)
         {
-            var response = await _httpClient.GetAsync("api/Advert");
+            var response = await _httpClient.GetAsync("api/Advert/"+id);
             response.EnsureSuccessStatusCode();
 
             Task<String> result = response.Content.ReadAsStringAsync();

@@ -24,11 +24,11 @@ namespace ClassifiedsBlazor.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, 
+                return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving objects from the database");
             }
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> FindById(int id)
         {
             try
