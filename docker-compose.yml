@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+    
+    frontend: 
+        image: frontendclassifieds
+        build:
+            context: ClassifiedsBlazor
+            dockerfile: Dockerfile
+        environment:
+            - BackendUrl=http://backend
+        ports: 
+            - "5299:80"
+        depends_on:
+            - backend       
+    backend:
+        image: backendclassifieds
+        build:
+            context: cb.api
+            dockerfile: Dockerfile
+        ports: 
+            - "5012:80"

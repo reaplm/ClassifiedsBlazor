@@ -1,5 +1,4 @@
 ﻿using ClassifiedsBlazor.Entities;
-using ClassifiedsBlazor.Repository;
 using Newtonsoft.Json;
 
 namespace ClassifiedsBlazor.Services.Impl

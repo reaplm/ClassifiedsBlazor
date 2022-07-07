@@ -1,6 +1,6 @@
-﻿using ClassifiedsBlazor.Entities;
+﻿using cb.api.Entities;
 
-namespace ClassifiedsBlazor.Repository
+namespace cb.api.Repository
 {
     public interface IAdvertRepo
     {

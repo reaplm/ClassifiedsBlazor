@@ -1,6 +1,3 @@
-using ClassifiedsBlazor.Data;
-using ClassifiedsBlazor.Repository;
-using ClassifiedsBlazor.Repository.Impl;
 using ClassifiedsBlazor.Services;
 using ClassifiedsBlazor.Services.Impl;
 using Microsoft.AspNetCore.Components;
@@ -12,22 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddControllers();
 
+//DI
 builder.Services.AddScoped<IAdvertService, AdvertService>();
-builder.Services.AddScoped<IAdvertRepo, AdvertRepo>();
 
-
-var baseUrl = builder.Configuration.GetValue<String>("BaseUrl");
+var baseUrl = builder.Configuration.GetValue<String>("BackendUrl");
 builder.Services.AddScoped(sp => new HttpClient
 {
 	BaseAddress = new Uri(baseUrl)
 });
 
-//Mysql
-var connectionString = builder.Configuration.GetSection("ConnectionStrings")["mysqlconnection"];
-builder.Services.AddDbContext<ApplicationContext>
-	(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();
 

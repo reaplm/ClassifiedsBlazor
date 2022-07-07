@@ -1,7 +1,8 @@
-﻿using ClassifiedsBlazor.Entities;
+﻿
+using cb.api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClassifiedsBlazor.Repository
+namespace cb.api.Repository
 {
     public class ApplicationContext : DbContext
     {

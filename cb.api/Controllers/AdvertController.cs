@@ -1,9 +1,9 @@
-﻿using ClassifiedsBlazor.Entities;
-using ClassifiedsBlazor.Repository;
-using Microsoft.AspNetCore.Http;
+﻿
+using cb.api.Entities;
+using cb.api.Repository;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ClassifiedsBlazor.Controllers
+namespace cb.api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -41,5 +41,6 @@ namespace ClassifiedsBlazor.Controllers
                     "Error retrieving object from the database");
             }
         }
+       
     }
 }

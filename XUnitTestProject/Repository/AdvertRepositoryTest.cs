@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ClassifiedsBlazor.Entities;
-using ClassifiedsBlazor.Repository;
-using ClassifiedsBlazor.Repository.Impl;
+using cb.api.Repository;
+using cb.api.Repository.Impl;
+using cb.api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassifiedsBlazor", "Classi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{4CF3F5DE-7435-4A4F-8709-4B96135F5AEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cb.api", "cb.api\cb.api.csproj", "{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,8 +20,11 @@ Global
 		{071D888A-9AC2-43F9-BE87-57C53E498042}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071D888A-9AC2-43F9-BE87-57C53E498042}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CF3F5DE-7435-4A4F-8709-4B96135F5AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CF3F5DE-7435-4A4F-8709-4B96135F5AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CF3F5DE-7435-4A4F-8709-4B96135F5AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
