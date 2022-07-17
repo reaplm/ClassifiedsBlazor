@@ -1,4 +1,7 @@
 pipeline {
+	agent any
+	
+	environment {
 		AWS_ACCOUNT_ID="274353818375"
 		AWS_DEFAULT_REGION="us-east-1"
 		CLUSTER_NAME="default"
