@@ -27,7 +27,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.compose "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+          dockerImage = docker-compose up --build -d
         }
       }
     }
@@ -48,6 +48,7 @@ pipeline {
             withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
                 script {
 			sh './script.sh'
+			
                 }
             } 
         }
