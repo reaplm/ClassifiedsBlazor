@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'a5b1dd00-6e31-412f-a6cf-9873f7fd4809'
+  dockerRegistryServiceConnection: '5e1aed4e-dfba-4011-a995-9d9a72a75fc0'
   imageRepository: 'classifiedsblazorcr'
   containerRegistry: 'classifiedsblazorcr'
   dockerfilePath: '$(Build.SourcesDirectory)/ClassifiedsBlazor/Dockerfile'
