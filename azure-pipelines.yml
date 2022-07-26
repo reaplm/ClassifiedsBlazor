@@ -12,7 +12,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'a5b1dd00-6e31-412f-a6cf-9873f7fd4809'
   imageRepository: 'classifiedsblazorcr'
-  containerRegistry: 'classifiedsblazorcr.azurecr.io'
+  containerRegistry: 'classifiedsblazorcr'
   dockerfilePath: '$(Build.SourcesDirectory)/ClassifiedsBlazor/Dockerfile'
   tag: '$(Build.BuildId)'
 
