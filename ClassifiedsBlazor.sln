@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassifiedsBlazor", "Classi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{4CF3F5DE-7435-4A4F-8709-4B96135F5AEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cb.api", "cb.api\cb.api.csproj", "{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cb.api", "cb.api\cb.api.csproj", "{C8CF03D7-67A4-4061-A8E3-D4699DEB057B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{019B44B9-5138-48A5-AE23-E238DE1056FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
