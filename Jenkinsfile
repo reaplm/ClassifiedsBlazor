@@ -27,7 +27,11 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+        //stop old containers
+            sh 'docker-compose –f docker-compose.yml down -v'
+            dockerImage = docker-compose –f docker-compose.yml up -d --build
+
+          //dockerImage = docker build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
         }
       }
     }
