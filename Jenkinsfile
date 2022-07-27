@@ -12,6 +12,8 @@ pipeline {
 		IMAGE_TAG="${env.BUILD_ID}"
 		REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_REPO_NAME}"
 		registryCredential = "classifieds-user"
+        FRONTEND_PATH = ""
+        BACKEND_PATH = ""
     }
    
     stages {
@@ -31,10 +33,11 @@ pipeline {
       steps{
         script {
         //stop old containers
-            sh 'docker-compose –f docker-compose.yml down -v'
-            dockerImage = docker-compose –f docker-compose.yml up -d --build
+            //sh 'docker-compose –f docker-compose.yml down -v'
+            sh 'docker-compose –f docker-compose.yml -d --build'
+            echo 'Docker-compose-build Build Image Completed'   
 
-          //dockerImage = docker build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+          
         }
       }
     }
@@ -43,8 +46,9 @@ pipeline {
     stage('Pushing to ECR') {
      steps{  
          script {
-			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                    	dockerImage.push()
+			//docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
+                    	//dockerImage.push()
+                        echo 'finished...'
                 	}
          }
         }
