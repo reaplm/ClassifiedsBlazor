@@ -47,10 +47,12 @@ pipeline {
     stage('Pushing to ECR') {
      steps{  
          script {
-			//docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                    	//dockerImage.push()
-                        echo 'pushing to ECR...'
-                	//}
+			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
+                    	sh 'sudo docker push frontendclassifieds:latest'
+                        sh 'sudo docker push backendclassifieds:latest'
+
+                        echo 'finished pushing to ECR...'
+                	}
          }
         }
       }
