@@ -35,7 +35,7 @@ pipeline {
         script {
         //stop old containers
             //sh 'docker-compose –f docker-compose.yml down -v'
-            sh 'docker-compose –f docker-compose.yml -d --build'
+            sh 'docker-compose build'
             echo 'Docker-compose-build Build Image Completed'   
 
           
