@@ -48,8 +48,6 @@ pipeline {
      steps{  
          script {
 			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                       // sh 'docker tag frontendclassifieds:latest ${REPOSITORY_URI}/frontendclassifieds:$BUILD_NUMBER'
-                        //sh 'docker tag backendclassifieds:latest ${REPOSITORY_URI}/backendclassifieds:$BUILD_NUMBER'
                         sh 'docker push ${REPOSITORY_URI}-be:$BUILD_NUMBER'
                         sh 'docker push ${REPOSITORY_URI}-fe:$BUILD_NUMBER'
 
@@ -62,19 +60,14 @@ pipeline {
       
     stage('Deploy') {
      steps{
-            //withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
-                //script {
-			//sh './script.sh'
-               // }
-               
-           //
-           //} 
-           script{
-               
-               echo 'deploying...'
-           }
-        }
-      }      
-      
+            withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
+                script {
+			        sh 'docker-compose up'
+
+                    echo 'finished deploying containers...'
+                }
+            }
+        }      
+      }
     }
 }
