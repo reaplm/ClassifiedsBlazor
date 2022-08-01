@@ -48,8 +48,8 @@ pipeline {
      steps{  
          script {
 			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                        sh 'docker push ${REPOSITORY_URI}-be'
-                        sh 'docker push ${REPOSITORY_URI}-fe'
+                        sh 'docker push ${REPOSITORY_URI}-be:latest'
+                        sh 'docker push ${REPOSITORY_URI}-fe:latest'
 
 
                         echo 'finished pushing to ECR...'
