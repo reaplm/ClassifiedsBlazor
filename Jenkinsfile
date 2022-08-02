@@ -62,7 +62,7 @@ pipeline {
      steps{
             withAWS(credentials: registryCredential, region: "${AWS_DEFAULT_REGION}") {
                 script {
-			        sh 'docker-compose up'
+			      //  sh 'docker-compose up'
 
                     echo 'finished deploying containers...'
                 }
