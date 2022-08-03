@@ -35,10 +35,10 @@ pipeline {
         script {
         //stop old containers
             //sh 'docker-compose –f docker-compose.yml down -v'
+            sh 'docker-compose down'
             sh 'docker-compose build'
             echo 'Docker-compose-build Build Image Completed'   
 
-          
         }
       }
     }
@@ -48,8 +48,8 @@ pipeline {
      steps{  
          script {
 			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                        sh 'docker push ${REPOSITORY_URI}-be:latest'
-                        sh 'docker push ${REPOSITORY_URI}-fe:latest'
+                        sh 'docker push ${REPOSITORY_URI}:be'
+                        sh 'docker push ${REPOSITORY_URI}:fe'
 
 
                         echo 'finished pushing to ECR...'
