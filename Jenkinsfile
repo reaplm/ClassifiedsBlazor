@@ -2,7 +2,6 @@ pipeline {
 	agent any
 	
 	environment {
-        SECRET_FILE_ID = credentials('env-secrets')
 		registryCredential = "classifieds-user"
 
     }
@@ -13,17 +12,7 @@ pipeline {
     stage('Unit Tests') {
       steps{
         script {
-          //sh 'npm install'
-	      //sh 'npm test -- --watchAll=false'
-          echo 'environment variables...'
-          echo ${env.AWS_ACCOUNT_ID}
-          echo ${env.AWS_DEFAULT_REGION}
-          echo ${env.CLUSTER_NAME}
-          echo ${env.SERVICE_NAME}
-          echo ${env.TASK_DEFINITION_NAME}
-          echo ${env.DESIRED_COUNT}
-          echo ${env.IMAGE_REPO_NAME}
-          echo ${env.REPOSITORY_URI}
+          echo 'testing stage...'
 
         }
       }
@@ -36,7 +25,7 @@ pipeline {
         //stop old containers
             //sh 'docker-compose –f docker-compose.yml down -v'
             //sh 'docker-compose down'
-            //sh 'docker-compose build'
+            sh 'docker-compose build'
             echo 'Docker-compose-build Build Image Completed'   
 
         }
@@ -47,9 +36,9 @@ pipeline {
     stage('Pushing to ECR') {
      steps{  
          script {
-			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                       // sh 'docker push ${REPOSITORY_URI}:be'
-                       // sh 'docker push ${REPOSITORY_URI}:fe'
+			docker.withRegistry("https://" + ${env.REPOSITORY_URI}, "ecr:${env.AWS_DEFAULT_REGION}:" + registryCredential) {
+                        sh 'docker push ${env.REPOSITORY_URI}:be'
+                        sh 'docker push ${env.REPOSITORY_URI}:fe'
 
 
                         echo 'finished pushing to ECR...'

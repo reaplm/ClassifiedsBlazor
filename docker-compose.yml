@@ -3,7 +3,7 @@ version: '3.4'
 services:
     
     frontend: 
-        image: frontendclassifieds
+        image: ${env.REPOSITORY_URI}:fe
         build:
             context: ClassifiedsBlazor
             dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
         depends_on:
             - backend       
     backend:
-        image: backendclassifieds
+        image: ${env.REPOSITORY_URI}:be
         build:
             context: cb.api
             dockerfile: Dockerfile
