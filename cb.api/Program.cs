@@ -22,7 +22,8 @@ builder.Services.AddScoped(sp => new HttpClient
 });
 
 //Mysql
-var connectionString = builder.Configuration.GetSection("ConnectionStrings")["mysqlconnection"];
+builder.Configuration.AddEnvironmentVariables().AddUserSecrets<Program>();
+var connectionString = builder.Configuration.GetConnectionString("mysqlconnection");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();

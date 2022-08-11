@@ -2,18 +2,9 @@ pipeline {
 	agent any
 	
 	environment {
-		AWS_ACCOUNT_ID="274353818375"
-		AWS_DEFAULT_REGION="us-east-1"
-		CLUSTER_NAME="default"
-		SERVICE_NAME="classifieds-container-service"
-		TASK_DEFINITION_NAME="first-run-task-definition:1"
-		DESIRED_COUNT="1"
-		IMAGE_REPO_NAME="classifiedsblazor"
-		IMAGE_TAG="${env.BUILD_ID}"
-		REPOSITORY_URI="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/${IMAGE_REPO_NAME}"
+        SECRET_FILE_ID = credentials('env-secrets')
 		registryCredential = "classifieds-user"
-        FRONTEND_PATH = ""
-        BACKEND_PATH = ""
+
     }
    
     stages {
@@ -23,8 +14,17 @@ pipeline {
       steps{
         script {
           //sh 'npm install'
-	  //sh 'npm test -- --watchAll=false'
-      echo 'unit tests'
+	      //sh 'npm test -- --watchAll=false'
+          echo 'environment variables...'
+          echo ${env.AWS_ACCOUNT_ID}
+          echo ${env.AWS_DEFAULT_REGION}
+          echo ${env.CLUSTER_NAME}
+          echo ${env.SERVICE_NAME}
+          echo ${env.TASK_DEFINITION_NAME}
+          echo ${env.DESIRED_COUNT}
+          echo ${env.IMAGE_REPO_NAME}
+          echo ${env.REPOSITORY_URI}
+
         }
       }
     }
@@ -35,8 +35,8 @@ pipeline {
         script {
         //stop old containers
             //sh 'docker-compose –f docker-compose.yml down -v'
-            sh 'docker-compose down'
-            sh 'docker-compose build'
+            //sh 'docker-compose down'
+            //sh 'docker-compose build'
             echo 'Docker-compose-build Build Image Completed'   
 
         }
@@ -48,8 +48,8 @@ pipeline {
      steps{  
          script {
 			docker.withRegistry("https://" + REPOSITORY_URI, "ecr:${AWS_DEFAULT_REGION}:" + registryCredential) {
-                        sh 'docker push ${REPOSITORY_URI}:be'
-                        sh 'docker push ${REPOSITORY_URI}:fe'
+                       // sh 'docker push ${REPOSITORY_URI}:be'
+                       // sh 'docker push ${REPOSITORY_URI}:fe'
 
 
                         echo 'finished pushing to ECR...'
