@@ -8,6 +8,7 @@ services:
             context: ClassifiedsBlazor
             dockerfile: Dockerfile
         environment:
+            - ASPNETCORE_ENVIRONMENT=Development
             - BackendUrl=http://backend
         ports: 
             - "5299:80"
@@ -24,7 +25,10 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             - USER_SECRETS_ID=c09811bb-8a45-4a0f-8a56-10c53b08f6e6
         volumes:
-             # - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:$HOME/.microsoft/usersecrets/$USER_SECRETS_ID
-           - /var/lib/docker/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID:rw
+            #- $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+            - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
+            
+            #- $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:$HOME/.microsoft/usersecrets/$USER_SECRETS_ID
+           #- /var/lib/docker/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID:rw
 
 
