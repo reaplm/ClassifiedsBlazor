@@ -51,7 +51,8 @@ pipeline {
      steps{
             withAWS(credentials: registryCredential, region: "${env.AWS_DEFAULT_REGION}") {
                 script {
-			        sh 'docker-compose up'
+					//sh 'docker-compose down --remove-orphans -v'
+			        //sh 'docker-compose up'
 
                     echo 'finished deploying containers...'
                 }
