@@ -9,11 +9,11 @@ namespace cb.api.Controllers
         {
             try
             {
-                return Ok();
+                return Ok("Service is healthy!");
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Service is unhealthy");
             }
         }
     }
