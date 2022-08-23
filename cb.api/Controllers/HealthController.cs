@@ -5,6 +5,7 @@ namespace cb.api.Controllers
     [Route("api/[controller]")]
     public class HealthController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             try
