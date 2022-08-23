@@ -21,9 +21,16 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(baseUrl)
 });
 
-//Mysql
-builder.Configuration.AddEnvironmentVariables().AddUserSecrets<Program>();
-var connectionString = builder.Configuration.GetConnectionString("mysqlconnection");
+//Mysql from user secrets
+//builder.Configuration.AddEnvironmentVariables().AddUserSecrets<Program>();
+//var connectionString = builder.Configuration.GetConnectionString("mysqlconnection");
+
+//Get connection string from env
+builder.Configuration.AddEnvironmentVariables();
+var connectionString = Environment.GetEnvironmentVariable("RDS_DB_CONN_STRING");
+Console.WriteLine(connectionString);
+
+//db connection
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();
