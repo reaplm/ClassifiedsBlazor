@@ -13,7 +13,12 @@ builder.Services.AddServerSideBlazor();
 //DI
 builder.Services.AddScoped<IAdvertService, AdvertService>();
 
-var baseUrl = builder.Configuration.GetValue<String>("BackendUrl");
+//var baseUrl = builder.Configuration.GetValue<String>("BackendUrl");
+
+//Get service name from env
+builder.Configuration.AddEnvironmentVariables();
+var baseUrl = Environment.GetEnvironmentVariable("BackendUrl");
+
 builder.Services.AddScoped(sp => new HttpClient
 {
 	BaseAddress = new Uri(baseUrl)
