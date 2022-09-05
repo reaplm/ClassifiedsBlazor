@@ -18,6 +18,7 @@ builder.Services.AddScoped<IAdvertService, AdvertService>();
 //Get service name from env
 builder.Configuration.AddEnvironmentVariables();
 var baseUrl = Environment.GetEnvironmentVariable("BackendUrl");
+Console.WriteLine("Printing BackendUrl... " + baseUrl);
 
 builder.Services.AddScoped(sp => new HttpClient
 {
