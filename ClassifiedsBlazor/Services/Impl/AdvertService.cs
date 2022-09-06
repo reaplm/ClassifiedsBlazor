@@ -13,22 +13,24 @@ namespace ClassifiedsBlazor.Services.Impl
         }
         public async Task<IEnumerable<Advert>> FindAll()
         {
+            var adverts = new List<Advert>();
+
             try
             {
                 var response = await _httpClient.GetAsync("api/Advert");
-
                 response.EnsureSuccessStatusCode();
 
                 Task<String> result = response.Content.ReadAsStringAsync();
-                var adverts = JsonConvert.DeserializeObject<List<Advert>>(result.Result);
+                adverts = JsonConvert.DeserializeObject<List<Advert>>(result.Result);
 
-                return adverts;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+               
             }
             
+            return adverts;
 
         }
 
