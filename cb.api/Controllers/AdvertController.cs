@@ -24,6 +24,7 @@ namespace cb.api.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving objects from the database");
             }
