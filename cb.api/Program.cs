@@ -1,3 +1,5 @@
+using Amazon.CloudWatch;
+using Amazon.Runtime;
 using cb.api.Repository;
 using cb.api.Repository.Impl;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +21,23 @@ var baseUrl = builder.Configuration.GetValue<String>("BaseUrl");
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(baseUrl)
+});
+
+//AWS SETUP
+// Configures default options like AWS region - if you don't provide any, its taken from the AWS Fargate environment
+var awsOptions = builder.Configuration.GetAWSOptions();
+awsOptions.Credentials = new EnvironmentVariablesAWSCredentials();
+builder.Services.AddDefaultAWSOptions(awsOptions);
+
+// Makes the Amazon CloudWatch SDK available in the DI container
+builder.Services.AddAWSService<IAmazonCloudWatch>();
+builder.Services.AddScoped<AmazonCloudWatchClient>();
+
+// Confifures the ASP.NET Core logging to write logs to the log group provided in your CDK code
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddAWSProvider();
+    loggingBuilder.SetMinimumLevel(LogLevel.Debug);
 });
 
 //Mysql from user secrets
