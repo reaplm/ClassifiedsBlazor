@@ -24,10 +24,15 @@ namespace ClassifiedsBlazor.Services.Impl
             {
                 var response = await _httpClient.GetAsync("api/Advert");
 
+                _logger.LogInformation("_httpClient BaseAddress: " + _httpClient.BaseAddress +
+                    "\nDefaultRequestHeaders: " + _httpClient.DefaultRequestHeaders);
                 _logger.LogInformation("Response from AdvertService: " + response.ToString());
 
-                if(response.RequestMessage != null)
-                    _logger.LogInformation("Request from AdvertService: " + response.RequestMessage.RequestUri);
+                if (response.RequestMessage != null)
+                {
+                    //_logger.LogInformation("Request URI: " + response.RequestMessage.RequestUri);
+                    _logger.LogInformation("Request Message from AdvertService: " + response.RequestMessage);
+                }
 
                 response.EnsureSuccessStatusCode();
 
