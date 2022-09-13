@@ -1,3 +1,5 @@
+using Amazon.CloudWatch;
+using Amazon.Runtime;
 using ClassifiedsBlazor.Services;
 using ClassifiedsBlazor.Services.Impl;
 using Microsoft.AspNetCore.Components;
@@ -25,6 +27,31 @@ builder.Services.AddScoped(sp => new HttpClient
 	BaseAddress = new Uri(baseUrl)
 });
 
+//-------------------------------AWS SETUP---------------------------------------------------------
+// Configures default options like AWS region - if you don't provide any, its taken from the AWS Fargate environment
+var awsOptions = builder.Configuration.GetAWSOptions();
+awsOptions.Credentials = new EnvironmentVariablesAWSCredentials();
+
+var cred = awsOptions.Credentials.GetCredentials();
+Console.WriteLine(cred);
+builder.Services.AddDefaultAWSOptions(awsOptions);
+
+// Makes the Amazon CloudWatch SDK available in the DI container
+builder.Services.AddAWSService<IAmazonCloudWatch>();
+builder.Services.AddScoped<AmazonCloudWatchClient>();
+
+// Confifures the ASP.NET Core logging to write logs to the log group provided in your CDK code
+builder.Services
+    .AddSingleton(builder.Configuration)
+    .AddLogging(loggingBuilder =>
+    {
+        loggingBuilder
+        .AddConfiguration(builder.Configuration.GetSection("Logging"))
+        .AddConsole()
+        .AddDebug()
+        .AddAWSProvider(builder.Configuration.GetAWSLoggingConfigSection().Config);
+    });
+//-------------------------------------------------------------------------------------------
 
 var app = builder.Build();
 

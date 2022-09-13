@@ -1,4 +1,5 @@
 ﻿using ClassifiedsBlazor.Entities;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace ClassifiedsBlazor.Services.Impl
@@ -7,9 +8,13 @@ namespace ClassifiedsBlazor.Services.Impl
     {
         readonly
         private HttpClient _httpClient;
-        public AdvertService(HttpClient httpClient)
+        readonly
+            private ILogger _logger;
+
+        public AdvertService(HttpClient httpClient, ILogger<AdvertService> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
         public async Task<IEnumerable<Advert>> FindAll()
         {
@@ -18,6 +23,12 @@ namespace ClassifiedsBlazor.Services.Impl
             try
             {
                 var response = await _httpClient.GetAsync("api/Advert");
+
+                _logger.LogInformation("Response from AdvertService: " + response.ToString());
+
+                if(response.RequestMessage != null)
+                    _logger.LogInformation("Request from AdvertService: " + response.RequestMessage.RequestUri);
+
                 response.EnsureSuccessStatusCode();
 
                 Task<String> result = response.Content.ReadAsStringAsync();

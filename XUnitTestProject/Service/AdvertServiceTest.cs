@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ClassifiedsBlazor.Entities;
 using ClassifiedsBlazor.Services.Impl;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
@@ -43,8 +44,9 @@ namespace XUnitTestProject.Service
             {
                 BaseAddress = new Uri("http://test.com")
             };
+            var mockLogger = new Mock<ILogger<AdvertService>>();
 
-            var service = new AdvertService(_httpClient); 
+            var service = new AdvertService(_httpClient, mockLogger.Object); 
             var task = service.FindAll();
             var adverts = task.Result as IEnumerable<Advert>;
          
@@ -74,8 +76,9 @@ namespace XUnitTestProject.Service
             {
                 BaseAddress = new Uri("http://test.com")
             };
+            var mockLogger = new Mock<ILogger<AdvertService>>();
 
-            var service = new AdvertService(_httpClient);
+            var service = new AdvertService(_httpClient, mockLogger.Object);
             var task = service.FindById(4);
             var advert = task.Result as Advert;
 
