@@ -25,6 +25,11 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             #- USER_SECRETS_ID=c09811bb-8a45-4a0f-8a56-10c53b08f6e6
             - RDS_DB_CONN_STRING=${RDS_DB_CONN_STRING}
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+            
         #volumes:
             #- $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
             #- $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID

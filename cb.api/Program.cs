@@ -27,12 +27,14 @@ builder.Services.AddScoped(sp => new HttpClient
 //builder.Configuration.AddEnvironmentVariables().AddUserSecrets<Program>();
 //var connectionString = builder.Configuration.GetConnectionString("mysqlconnection");
 
+
 //Get connection string from env
 builder.Configuration.AddEnvironmentVariables();
 var connectionString = Environment.GetEnvironmentVariable("RDS_DB_CONN_STRING");
 Console.WriteLine(connectionString);
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
 
-//AWS SETUP
+//-------------------------------AWS SETUP---------------------------------------------------------
 // Configures default options like AWS region - if you don't provide any, its taken from the AWS Fargate environment
 var awsOptions = builder.Configuration.GetAWSOptions();
 awsOptions.Credentials = new EnvironmentVariablesAWSCredentials();
@@ -46,16 +48,18 @@ builder.Services.AddAWSService<IAmazonCloudWatch>();
 builder.Services.AddScoped<AmazonCloudWatchClient>();
 
 // Confifures the ASP.NET Core logging to write logs to the log group provided in your CDK code
-builder.Services.AddLogging(loggingBuilder =>
-{
-    loggingBuilder.AddAWSProvider();
-    loggingBuilder.SetMinimumLevel(LogLevel.Debug);
-});
+builder.Services
+    .AddSingleton(builder.Configuration)
+    .AddLogging(loggingBuilder =>
+    {
+        loggingBuilder
+        .AddConfiguration(builder.Configuration.GetSection("Logging"))
+        .AddConsole()
+        .AddDebug()
+        .AddAWSProvider(builder.Configuration.GetAWSLoggingConfigSection().Config);
+    });
+//-------------------------------------------------------------------------------------------
 
-
-
-//db connection
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseMySQL(connectionString));
 
 var app = builder.Build();
 
