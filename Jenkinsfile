@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	environment {
-		registryCredential = "app-admin-user"
+		registryCredential = "classifieds-user"
 
     }
    
